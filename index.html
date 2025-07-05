@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>📺 Anime Tracker</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime Tracker</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+
+<body class="light">
   <div class="container">
-    <div class="header">
-      <h1>📺 Anime Tracker</h1>
+    <h1>🎌 Anime Tracker</h1>
+
+    <div class="theme-toggle">
       <button id="themeToggle">🌗 Toggle Theme</button>
     </div>
 
+    <div class="add-anime">
+      <input type="text" id="animeName" placeholder="Anime Name">
+      <input type="number" id="totalEpisodes" placeholder="Total Episodes" min="1">
+      <input type="text" id="genre" placeholder="Genre">
+      <button onclick="addAnime()">➕ Add</button>
+    </div>
+
+    <div class="set-goal">
+      <input type="number" id="monthlyGoal" placeholder="Monthly Goal (Episodes)">
+      <button onclick="setGoal()">🎯 Set Goal</button>
+    </div>
+
+    <div id="goalProgress"></div>
     <div id="reminder" class="reminder"></div>
 
-    <div class="form">
-      <input type="text" id="animeName" placeholder="Anime Name" />
-      <input type="number" id="totalEpisodes" placeholder="Total Episodes" />
-      <input type="text" id="genre" placeholder="Genre" />
-      <button onclick="addAnime()">Add</button>
-    </div>
-
-    <div class="goal-section">
-      🎯 Monthly Goal: 
-      <input type="number" id="monthlyGoal" placeholder="Episodes/month" />
-      <button onclick="setGoal()">Set Goal</button>
-      <div id="goalProgress"></div>
-    </div>
-
-    <input type="text" id="searchInput" placeholder="🔍 Search anime..." oninput="renderList()" />
-
-    <div id="calendarView"></div>
-    <div id="analyticsView">
-      <canvas id="genreChart"></canvas>
+    <div class="search-bar">
+      <input type="text" id="searchInput" oninput="renderList()" placeholder="🔍 Search Anime">
     </div>
 
     <div id="animeList"></div>
+
+    <div class="calendar-section">
+      <div id="calendarView"></div>
+    </div>
+
+    <canvas id="genreChart" width="400" height="200"></canvas>
   </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>

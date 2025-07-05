@@ -1,11 +1,13 @@
 function detectTheme() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
+
 function applyTheme(theme) {
   document.body.classList.remove("dark", "light");
   document.body.classList.add(theme);
   localStorage.setItem("theme", theme);
 }
+
 applyTheme(localStorage.getItem("theme") || detectTheme());
 
 document.getElementById("themeToggle").addEventListener("click", () => {
@@ -16,11 +18,20 @@ document.getElementById("themeToggle").addEventListener("click", () => {
 let trackerList = JSON.parse(localStorage.getItem("trackerList")) || [];
 let goal = parseInt(localStorage.getItem("monthlyGoal")) || 0;
 
+function saveData() {
+  localStorage.setItem("trackerList", JSON.stringify(trackerList));
+}
+
 function addAnime() {
   const name = document.getElementById("animeName").value.trim();
   const total = parseInt(document.getElementById("totalEpisodes").value);
   const genre = document.getElementById("genre").value.trim();
-  if (!name || !total || !genre) return alert("Fill all fields!");
+
+  if (!name || !total || !genre || total <= 0) {
+    alert("Please fill all fields and ensure total episodes is positive.");
+    return;
+  }
+
   trackerList.push({ name, total, watched: 0, genre, updatedDates: [], lastUpdated: new Date().toISOString() });
   saveData();
   renderList();
@@ -37,19 +48,12 @@ function setGoal() {
 
 function changeWatched(index, delta) {
   let item = trackerList[index];
-  let newCount = item.watched + delta;
-
-  if (newCount < 0) {
-    alert("⚠️ You can't go below 0 episodes!");
+  let newWatched = item.watched + delta;
+  if (newWatched < 0) {
+    alert("Watched episodes cannot be negative!");
     return;
   }
-
-  if (newCount > item.total) {
-    alert("⚠️ You have already completed all episodes!");
-    return;
-  }
-
-  item.watched = newCount;
+  item.watched = Math.min(item.total, newWatched);
   item.lastUpdated = new Date().toISOString();
   item.updatedDates.push(new Date().toISOString());
   saveData();
@@ -78,10 +82,6 @@ function renameAnime(index) {
     saveData();
     renderList();
   }
-}
-
-function saveData() {
-  localStorage.setItem("trackerList", JSON.stringify(trackerList));
 }
 
 function renderGoal() {
