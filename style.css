@@ -13,13 +13,13 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.form, .goal-section {
+.form, .goal-section, .filter-section {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin: 15px 0;
 }
-input, button {
+input, button, select {
   padding: 10px;
   border-radius: 5px;
   border: none;
@@ -61,7 +61,7 @@ button {
   font-weight: bold;
   margin-top: 10px;
 }
-#calendarView, #analyticsView {
+#calendarView, #analyticsView, #weeklyStats {
   margin: 20px 0;
   font-size: 14px;
   border-top: 1px solid #999;
@@ -71,7 +71,7 @@ button {
   background: #ffffff;
   color: #000;
 }
-.light input {
+.light input, .light select {
   background: #f8f9fa;
   color: #000;
 }
@@ -86,7 +86,7 @@ button {
   background: #121212;
   color: #eee;
 }
-.dark input {
+.dark input, .dark select {
   background: #1e1e1e;
   color: #eee;
 }

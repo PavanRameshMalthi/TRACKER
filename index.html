@@ -1,51 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Tracker</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📺 Anime Tracker Plus</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
-<body class="light">
+<body>
   <div class="container">
-    <h1>🎌 Anime Tracker</h1>
-
-    <div class="theme-toggle">
+    <div class="header">
+      <h1>📺 Anime Tracker</h1>
       <button id="themeToggle">🌗 Toggle Theme</button>
     </div>
 
-    <div class="add-anime">
-      <input type="text" id="animeName" placeholder="Anime Name">
-      <input type="number" id="totalEpisodes" placeholder="Total Episodes" min="1">
-      <input type="text" id="genre" placeholder="Genre">
-      <button onclick="addAnime()">➕ Add</button>
-    </div>
-
-    <div class="set-goal">
-      <input type="number" id="monthlyGoal" placeholder="Monthly Goal (Episodes)">
-      <button onclick="setGoal()">🎯 Set Goal</button>
-    </div>
-
-    <div id="goalProgress"></div>
     <div id="reminder" class="reminder"></div>
 
-    <div class="search-bar">
-      <input type="text" id="searchInput" oninput="renderList()" placeholder="🔍 Search Anime">
+    <div class="form">
+      <input type="text" id="animeName" placeholder="Anime Name" />
+      <input type="number" id="totalEpisodes" placeholder="Total Episodes" min="1" />
+      <input type="text" id="genre" placeholder="Genre" />
+      <button onclick="addAnime()">Add</button>
+    </div>
+
+    <div class="goal-section">
+      🎯 Monthly Goal:
+      <input type="number" id="monthlyGoal" placeholder="Episodes/month" />
+      <button onclick="setGoal()">Set Goal</button>
+      <div id="goalProgress"></div>
+    </div>
+
+    <div class="filter-section">
+      <input type="text" id="searchInput" placeholder="🔍 Search anime..." oninput="renderList()" />
+      <select id="sortOption" onchange="renderList()">
+        <option value="">Sort By</option>
+        <option value="name">Name</option>
+        <option value="watched">Most Watched</option>
+        <option value="updated">Recently Updated</option>
+      </select>
+      <select id="genreFilter" onchange="renderList()">
+        <option value="">All Genres</option>
+        <!-- Dynamically filled genres -->
+      </select>
+    </div>
+
+    <div id="calendarView"></div>
+    <div id="weeklyStats"></div>
+
+    <div id="analyticsView">
+      <canvas id="genreChart"></canvas>
+      <canvas id="genrePie"></canvas>
     </div>
 
     <div id="animeList"></div>
-
-    <div class="calendar-section">
-      <div id="calendarView"></div>
-    </div>
-
-    <canvas id="genreChart" width="400" height="200"></canvas>
   </div>
 
   <script src="script.js"></script>
 </body>
-
 </html>
