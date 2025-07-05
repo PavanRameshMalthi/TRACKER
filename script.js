@@ -20,13 +20,10 @@ function addAnime() {
   const name = document.getElementById("animeName").value.trim();
   const total = parseInt(document.getElementById("totalEpisodes").value);
   const genre = document.getElementById("genre").value.trim();
-
-  if (!name || isNaN(total) || !genre) return alert("Fill all fields correctly!");
-
+  if (!name || !total || !genre) return alert("Fill all fields!");
   trackerList.push({ name, total, watched: 0, genre, updatedDates: [], lastUpdated: new Date().toISOString() });
   saveData();
   renderList();
-
   document.getElementById("animeName").value = "";
   document.getElementById("totalEpisodes").value = "";
   document.getElementById("genre").value = "";
@@ -40,7 +37,19 @@ function setGoal() {
 
 function changeWatched(index, delta) {
   let item = trackerList[index];
-  item.watched = Math.min(item.total, Math.max(0, item.watched + delta));
+  let newCount = item.watched + delta;
+
+  if (newCount < 0) {
+    alert("⚠️ You can't go below 0 episodes!");
+    return;
+  }
+
+  if (newCount > item.total) {
+    alert("⚠️ You have already completed all episodes!");
+    return;
+  }
+
+  item.watched = newCount;
   item.lastUpdated = new Date().toISOString();
   item.updatedDates.push(new Date().toISOString());
   saveData();
